@@ -74,5 +74,8 @@
       }
     }
   },
-  "defaultProject": "fundamental-ngx-example"
+  "defaultProject": "fundamental-ngx-example",
+  "cli": {
+    "analytics": false
+  }
 }
