@@ -5,7 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
 import { NgxAngularQueryBuilderModule } from 'ngx-angular-query-builder';
-// import { FundamentalNgxCoreModule } from '@fundamental-ngx/core';
+import { FundamentalNgxPlatformModule } from '@fundamental-ngx/platform';
+import { FundamentalNgxCoreModule } from '@fundamental-ngx/core';
 // import { FundamentalNgxPlatformModule } from '@fundamental-ngx/platform';
 // import {
 //   FD_LANGUAGE,
@@ -19,8 +20,8 @@ import { NgxAngularQueryBuilderModule } from 'ngx-angular-query-builder';
     BrowserModule,
     FormsModule,
     NgxAngularQueryBuilderModule,
-    // FundamentalNgxCoreModule,
-    // FundamentalNgxPlatformModule,
+    FundamentalNgxCoreModule,
+    FundamentalNgxPlatformModule,
   ],
   declarations: [AppComponent, HelloComponent],
   bootstrap: [AppComponent],
