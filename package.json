@@ -32,7 +32,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "gh": "ng deploy --base-href=/ngx-query-builder-fb/"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.11",
@@ -50,6 +51,7 @@
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
+    "angular-cli-ghpages": "1.0.5",
     "codelyzer": "^0.0.28",
     "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.8.0",
