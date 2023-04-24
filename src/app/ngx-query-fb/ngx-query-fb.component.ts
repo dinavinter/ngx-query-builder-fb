@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { QueryBuilderConfig } from 'ngx-angular-query-builder';
+import { QueryBuilderConfig,Rule,RuleSet } from 'ngx-angular-query-builder';
 
 @Component({
   selector: 'app-ngx-query-fb',
@@ -13,49 +13,83 @@ export class NgxQueryFbComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  @Input() query = {
-    root: true,
-    condition: 'and',
-    rules: [
+ 
+  
+    @Input() query = {
+      root: true,
+      condition: 'and',
+      rules: [
+        {
+          condition: 'and',
+          rules: [AllAccountsRule],
+        },
+      ],
+    };
+  
+    @Input() config: QueryBuilderConfig = {
+      addRuleSet: this.addRuleSet.bind(this),
+      removeRule:this.removeRule.bind(this),
+      fields: {
+        age: { name: 'Age', type: 'number' },
+        gender: {
+          name: 'Gender',
+          type: 'category',
+          options: [
+            { name: 'Male', value: '' },
+            { name: 'Female', value: 'f' },
+          ],
+        },
+        foo: {
+          name: 'Foo',
+          type: 'object',
+          operators: ['between', 'less', 'bigger'],
+          defaultValue: [],
+        },
+        UID: {
+          name: 'uid',
+          type: 'all-accounts',
+          operators: ['is not null'],
+          defaultOperator: 'is not null',
+        },
+      },
+    };
+  
+    // getClassNames(...args): string {
+    //   const clsLookup = this.classNames
+    //     ? this.classNames
+    //     : this.defaultClassNames;
+    //   const classNames = args
+    //     .map((id) => clsLookup[id] || this.defaultClassNames[id])
+    //     .filter((c) => !!c);
+    //   return classNames.length ? classNames.join(' ') : null;
+    // }
+  
+    onQueryBuilderChange($event) {
+      console.log($event);
+    }
+  
+    log(event?: any): void {
+      console.log(event);
+    }
+  
+    addRuleSet(parent?: RuleSet): void {
+      parent.rules = parent.rules.concat([
+        {
+          condition: 'and',
+          rules: [AllAccountsRule],
+        },
+      ]);
+    }
+    removeRule(rule: Rule, parent?: RuleSet): void {
+      parent.rules = parent.rules = parent.rules.filter((r) => r !== rule);
+      if(parent.rules.length === 0)
       {
-        condition: 'or',
-        rules: [
-          { field: 'age', operator: '=', value: 4 },
-          { field: 'age', operator: '>', value: 20 },
-        ],
-      },
-      {
-        condition: 'and',
-        rules: [{ field: 'gender', operator: '=', value: 'f' }],
-      },
-    ],
-  };
+        this.query.rules = this.query.rules.filter((r) => r !== parent);
+      }
+    }
 
-  @Input() config: QueryBuilderConfig = {
-    fields: {
-      age: { name: 'Age', type: 'number' },
-      gender: {
-        name: 'Gender',
-        type: 'category',
-        options: [
-          { name: 'Male', value: '' },
-          { name: 'Female', value: 'f' },
-        ],
-      },
-      foo: {
-        name: 'Foo',
-        type: 'object',
-        operators: ['between', 'less', 'bigger'],
-        defaultValue: [],
-      },
-    },
-  };
-
-  onQueryBuilderChange($event) {
-    console.log($event);
   }
-
-  log(event?: any): void {
-    console.log(event);
-  }
-}
+  const AllAccountsRule = {
+    field: 'UID',
+    operator: 'is not null',
+  };
