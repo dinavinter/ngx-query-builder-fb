@@ -6,5 +6,6 @@ import { Component,  } from '@angular/core';
 })
 export class AppComponent {
 
+  public title = 'NGX Query Builder w/t Fundamental NGX';
 
 }

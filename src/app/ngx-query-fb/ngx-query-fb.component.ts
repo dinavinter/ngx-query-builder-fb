@@ -57,15 +57,6 @@ export class NgxQueryFbComponent implements OnInit {
       },
     };
   
-    // getClassNames(...args): string {
-    //   const clsLookup = this.classNames
-    //     ? this.classNames
-    //     : this.defaultClassNames;
-    //   const classNames = args
-    //     .map((id) => clsLookup[id] || this.defaultClassNames[id])
-    //     .filter((c) => !!c);
-    //   return classNames.length ? classNames.join(' ') : null;
-    // }
   
     onQueryBuilderChange($event) {
       console.log($event);

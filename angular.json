@@ -10,19 +10,34 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
         }
       },
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:browser", 
           "options": {
-            "aot": true,
-            "outputPath": "dist",
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "fast-deep-equal"
+            ],
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "outputPath": "dist/ngx-query-builder-fb",
+            "optimization": {
+              "scripts": true,
+              "styles": {
+                "minify": true,
+                "inlineCritical": true
+              },
+              "fonts": true
+            },
             "assets": [
               "src/assets",
               {
@@ -31,51 +46,94 @@
                 "output": "./assets/theming-base/"
               },
               {
-                "glob": "**/*.wof",
+                "glob": "**/*.woff",
                 "input": "./node_modules/@sap-theming/theming-base-content/content/Base/baseLib/fonts/",
-                "output": "./assets/theming-base/"
+                "output": "./assets/fonts",
+                "followSymlinks": true
+                
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@sap-theming/theming-base-content/content/Base/baseLib/baseTheme/fonts/",
+                "output": "./assets/fonts"
+              },  
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@@sap-theming/theming-base-content/content/Base/baseLib/sap_horizon/fonts/",
+                "output": "./assets/fonts"
               },
               {
                 "glob": "**/*",
                 "input": "./node_modules/fundamental-styles/dist/theming/",
                 "output": "./assets/fundamental-styles-theming/"
+                
               }
             ],
             "styles": ["src/styles.scss",
               "node_modules/fundamental-styles/dist/theming/sap_fiori_3.css",
               "node_modules/fundamental-styles/dist/icon.css",
-              "node_modules/fundamental-styles/dist/fundamental-styles.css",
-              "node_modules/@sap-theming/theming-base-content/content/Base/baseLib/sap_fiori_3/css_variables.css"
+              "node_modules/@sap-theming/theming-base-content/content/Base/baseLib/sap_fiori_3/css_variables.css",
+              { "input": "node_modules/fundamental-styles/dist/fundamental-styles.css", "bundleName": "fundamental-styles"  }
 
-            ],
+            ], 
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules/@sap-theming/theming-base-content/content/Base/baseLib/sap_fiori_3",
+                "node_modules/fundamental-styles/dist",
+                "node_modules/@sap-theming/theming-base-content/content/Base/baseLib/sap_horizon/fonts"
+                "dist/assets"
+                
+              ]
+            },
+
+
             "scripts": []
           },
           "configurations": {
             "production": {
-              "fileReplacements": [],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": true
+                },
+                "fonts": true
+              },
+              
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.production.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "6mb",
+                  "maximumError": "6mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "6mb"
                 }
               ]
             },
             "development": {
+              "aot": true,
+
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             },
             "ar": {
               "aot": true,
@@ -83,7 +141,13 @@
               "i18nFile": "src/locale/ar/messages.ar.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "ar",
-              "i18nMissingTranslation": "error"
+              "i18nMissingTranslation": "error",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.ar.ts"
+                }
+              ]
             },
             "fr": {
               "aot": true,
@@ -91,10 +155,17 @@
               "i18nFile": "src/locale/fr/messages.fr.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "fr",
-              "i18nMissingTranslation": "error"
+              "i18nMissingTranslation": "error",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.fr.ts"
+                }
+              ]
             }
 
           }
+       
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -108,11 +179,14 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "noSilent": true
+          }
         }
       }
-    }
-  },
+    }},
+    
   "defaultProject": "ngx-query-builder-fb",
   "cli": {
     "analytics": false
