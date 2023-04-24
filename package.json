@@ -28,11 +28,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --serve-path=/ngx-query-builder-fb/",
-    "build": "ng build --base-href=/ngx-query-builder-fb/",
+    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng deploy --base-href=/ngx-query-builder-fb/",
+    "deploy": "ng deploy",
     "gh": "ng deploy --base-href=ngx-query-builder-fb"
   },
   "devDependencies": {

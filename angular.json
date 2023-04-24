@@ -138,7 +138,10 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "https://dinavinter.github.io/ngx-query-builder-fb/"
+          }
         }
       }
     }
