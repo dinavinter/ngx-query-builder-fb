@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "fundamental-ngx-example": {
+    "ngx-query-fb": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -99,18 +99,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "fundamental-ngx-example:build"
+            "browserTarget": "ngx-query-fb:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "fundamental-ngx-example:build:production"
+              "browserTarget": "ngx-query-fb:build:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "fundamental-ngx-example",
+  "defaultProject": "ngx-query-fb",
   "cli": {
     "analytics": false
   }
