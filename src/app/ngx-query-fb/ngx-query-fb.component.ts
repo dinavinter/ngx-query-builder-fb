@@ -16,7 +16,6 @@ export class NgxQueryFbComponent implements OnInit {
   @Input() classNames: QueryBuilderClassNames = {
     removeButton: "fd-button fd-button--transparent is-cozy",
     removeIcon:"fd-icon sap-icon--delete",
-
   };
   
     @Input() query = {
