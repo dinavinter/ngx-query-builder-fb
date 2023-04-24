@@ -1,9 +1,9 @@
 <query-builder
-  [(ngModel)]="query"
-  [config]="config"
-  (ngModelChange)="onQueryBuilderChange($event)"
-  [classNames]="classNames">
-  <ng-container *queryButtonGroup="
+        [(ngModel)]="query"
+        [config]="config"
+        (ngModelChange)="onQueryBuilderChange($event)"
+        [classNames]="classNames">
+    <ng-container *queryButtonGroup="
             let ruleset;
             let addRule = addRule;
             let addRuleSet = addRuleSet;
@@ -12,67 +12,61 @@
             let $parent = $parent
           ">
 
-         
-        
-  
 
-    <div *ngIf="ruleset.rules.length > 0; else root">
-      <button
-        fd-button
-        fdType="transparent"
-        glyph="add"
-        (click)="addRule()"
-        tooltip="Add Condition"></button>
-      <!-- <button
-        (click)="removeRuleSet()"
-        fd-button
-        fdType="transparent"
-        glyph="delete"
-        tooltip="Remove Rule Set"></button> -->
-    </div>
+        <div *ngIf="ruleset.rules.length > 0; else root">
+            <button
+                    fd-button
+                    fdType="transparent"
+                    glyph="add"
+                    (click)="addRule()"
+                    tooltip="Add Condition"></button>
+            <!-- <button
+              (click)="removeRuleSet()"
+              fd-button
+              fdType="transparent"
+              glyph="delete"
+              tooltip="Remove Rule Set"></button> -->
+        </div>
 
-    <ng-template #root>
-      <div>
-       
+        <ng-template #root>
+            <div>
+
+                <button
+                        fd-button
+                        fdType="transparent"
+                        glyph="add-folder"
+                        (click)="addRuleSet()"
+                        tooltip="Add Rule Set"></button>
+            </div>
+        </ng-template>
+
+    </ng-container>
+
+    <ng-container *querySwitchGroup="let ruleset">
+        <fd-select *ngIf="ruleset.rules.length > 1" [(ngModel)]="ruleset.condition">
+            <fd-option value="and">and</fd-option>
+            <li fd-option value
+                value="or">or
+            </li>
+        </fd-select>
+        <ng-template #root></ng-template>
+    </ng-container>
+
+
+    <ng-container [fdCozy]="true" *queryRemoveButton="let rule; let removeRule=removeRule">
         <button
-          fd-button
-          fdType="transparent"
-          glyph="add-folder"
-          (click)="addRuleSet()"
-          tooltip="Add Rule Set"></button>
-      </div>
-    </ng-template>
-        <!-- <button fd-button
-        fdType="transparent"
-        glyph="sys-find" 
-        (click)="log(ruleset)"></button> -->
- 
-  </ng-container>
-
-  <ng-container *querySwitchGroup="let ruleset">
-    <fd-select *ngIf="ruleset.rules.length > 1" [(ngModel)]="ruleset.condition">
-      <li fd-option
-        value="and">and</li>
-      <li fd-option value
-        value="or">or</li>
-    </fd-select>
-    <ng-template #root></ng-template>
-  </ng-container>
-
-
-  <ng-container [fdCozy]="true"  *queryRemoveButton="let rule; let removeRule=removeRule">
-    <button
-    (click)="removeRule(rule)"
-    fd-button
-    fdType="transparent"
-    glyph="delete"
-    tooltip="Remove Rule"></button>
-  </ng-container>
+                (click)="removeRule(rule)"
+                fd-button
+                fdType="transparent"
+                glyph="delete"
+                tooltip="Remove Rule"></button>
+    </ng-container>
 
 </query-builder>
 
-<p>{{ query | json }}</p>
-
+<footer>
+    <code title="Output" fd-dynamic-side-content position="bottom">{{ query | json }}</code>
+</footer>
 <!-- 
 <ng-container *querySwitchGroup="let ruleset">
     <fd-split-button (primaryButtonClicked)="addRule()" >
@@ -91,4 +85,9 @@
           </li>
       </fd-menu>
   </fd-split-button> 
-  </ng-container> -->
+  </ng-container>
+
+<button fd-button
+        fdType="transparent"
+        glyph="sys-find" 
+        (click)="log(ruleset)"></button> -->

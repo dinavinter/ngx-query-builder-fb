@@ -5,15 +5,16 @@ import { NgQueryBuilderConsoleComponent } from './ng-query-builder-console/ng-qu
 import {LandingComponent} from './landing/landing.component'
 const routes: Routes = [
   { path: 'main', component: LandingComponent},
-
-  { path: 'query-fb-console', component: NgQueryBuilderConsoleComponent},
-
+  { path: 'query-fb-console', component: NgQueryBuilderConsoleComponent}, 
   { path: 'query-fb', component: NgxQueryFbComponent},
-  { path: '', redirectTo: '/main', pathMatch: 'full'}
+  { path: '',   redirectTo: '/main', pathMatch: 'full' }, 
+
+  { path: '**', component : LandingComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

@@ -18,7 +18,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:browser", 
           "options": {
             "allowedCommonJsDependencies": [
               "lodash",
@@ -30,7 +30,14 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "outputPath": "dist/ngx-query-builder-fb",
-
+            "optimization": {
+              "scripts": true,
+              "styles": {
+                "minify": true,
+                "inlineCritical": true
+              },
+              "fonts": true
+            },
             "assets": [
               "src/assets",
               {
@@ -39,27 +46,60 @@
                 "output": "./assets/theming-base/"
               },
               {
-                "glob": "**/*.wof",
+                "glob": "**/*.woff",
                 "input": "./node_modules/@sap-theming/theming-base-content/content/Base/baseLib/fonts/",
-                "output": "./assets/theming-base/"
+                "output": "./assets/fonts",
+                "followSymlinks": true
+                
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@sap-theming/theming-base-content/content/Base/baseLib/baseTheme/fonts/",
+                "output": "./assets/fonts"
+              },  
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@@sap-theming/theming-base-content/content/Base/baseLib/sap_horizon/fonts/",
+                "output": "./assets/fonts"
               },
               {
                 "glob": "**/*",
                 "input": "./node_modules/fundamental-styles/dist/theming/",
                 "output": "./assets/fundamental-styles-theming/"
+                
               }
             ],
             "styles": ["src/styles.scss",
               "node_modules/fundamental-styles/dist/theming/sap_fiori_3.css",
               "node_modules/fundamental-styles/dist/icon.css",
-              "node_modules/fundamental-styles/dist/fundamental-styles.css",
-              "node_modules/@sap-theming/theming-base-content/content/Base/baseLib/sap_fiori_3/css_variables.css"
+              "node_modules/@sap-theming/theming-base-content/content/Base/baseLib/sap_fiori_3/css_variables.css",
+              { "input": "node_modules/fundamental-styles/dist/fundamental-styles.css", "bundleName": "fundamental-styles"  }
 
-            ],
+            ], 
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules/@sap-theming/theming-base-content/content/Base/baseLib/sap_fiori_3",
+                "node_modules/fundamental-styles/dist",
+                "node_modules/@sap-theming/theming-base-content/content/Base/baseLib/sap_horizon/fonts"
+                "dist/assets"
+                
+              ]
+            },
+
+
             "scripts": []
           },
           "configurations": {
             "production": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": true
+                },
+                "fonts": true
+              },
+              
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -69,13 +109,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "5mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "6mb",
+                  "maximumError": "6mb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumError": "6mb"
                 }
               ]
             },
@@ -125,6 +165,7 @@
             }
 
           }
+       
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -140,12 +181,12 @@
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
           "options": {
-            "baseHref": "https://dinavinter.github.io/ngx-query-builder-fb/"
+            "noSilent": true
           }
         }
       }
-    }
-  },
+    }},
+    
   "defaultProject": "ngx-query-builder-fb",
   "cli": {
     "analytics": false
