@@ -33,7 +33,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "gh": "ng deploy --base-href=/ngx-query-builder-fb/"
+    "deploy": "ng deploy"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.11",
