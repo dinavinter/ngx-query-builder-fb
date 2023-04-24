@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "fundamental-ngx-example": {
+    "ngx-query-builder-fb": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -41,13 +41,13 @@
                 "output": "./assets/fundamental-styles-theming/"
               }
             ],
-            "styles": ["src/styles.scss", 
-            "node_modules/fundamental-styles/dist/theming/sap_fiori_3.css",
-            "node_modules/fundamental-styles/dist/icon.css",
-            "node_modules/fundamental-styles/dist/fundamental-styles.css",
-            "node_modules/@sap-theming/theming-base-content/content/Base/baseLib/sap_fiori_3/css_variables.css"
+            "styles": ["src/styles.scss",
+              "node_modules/fundamental-styles/dist/theming/sap_fiori_3.css",
+              "node_modules/fundamental-styles/dist/icon.css",
+              "node_modules/fundamental-styles/dist/fundamental-styles.css",
+              "node_modules/@sap-theming/theming-base-content/content/Base/baseLib/sap_fiori_3/css_variables.css"
 
-          ],
+            ],
             "scripts": []
           },
           "configurations": {
@@ -79,7 +79,7 @@
             },
             "ar": {
               "aot": true,
-              "outputPath": "dist/fundamental-ngx-sample-apps/locale/ar",
+              "outputPath": "dist/ngx-query-builder-fb/locale/ar",
               "i18nFile": "src/locale/ar/messages.ar.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "ar",
@@ -87,7 +87,7 @@
             },
             "fr": {
               "aot": true,
-              "outputPath": "dist/fundamental-ngx-sample-apps/locale/fr",
+              "outputPath": "dist/ngx-query-builder-fb/locale/fr",
               "i18nFile": "src/locale/fr/messages.fr.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "fr",
@@ -99,18 +99,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "fundamental-ngx-example:build"
+            "browserTarget": "ngx-query-builder-fb:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "fundamental-ngx-example:build:production"
+              "browserTarget": "ngx-query-builder-fb:build:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }
   },
-  "defaultProject": "fundamental-ngx-example",
+  "defaultProject": "ngx-query-builder-fb",
   "cli": {
     "analytics": false
   }
