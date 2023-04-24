@@ -1,0 +1,133 @@
+fd-message-strip {
+  margin-bottom: 16px;
+}
+
+ 
+::ng-deep .fd-select__control {
+  margin-top: 0;
+}
+
+.sticky-footer {
+  position: sticky;
+  bottom: 20px;
+  margin-top: 20px;
+  z-index: 1;
+  .save-btn {
+    margin-right: 10px;
+  }
+}
+
+
+fd-message-strip {
+  margin-bottom: 16px;
+}
+.dynamic-data-access.panel-title {
+  font-weight: 700;
+  font-size: 16px;
+  float: left;
+}
+
+.dynamic-data-access.top-button {
+  float: right;
+  margin-left: 16px;
+}
+.dynamic-data-access.panel-top-part {
+  padding: 16px 10px;
+}
+
+query-builder.condiction-select::ng-deep fd-popover {
+  width: 169px;
+}
+
+query-builder.value-select::ng-deep fd-popover {
+  width: 100%;
+}
+
+query-builder.field-select::ng-deep fd-popover {
+  width: 100%;
+}
+
+query-builder.operator-select::ng-deep fd-popover {
+  width: 100%;
+}
+
+query-builder.operator-select {
+  margin: 0 36px;
+}
+
+query-builder.field-select,
+.operator-select,
+.fd-input,
+.value-select {
+  width: calc(33% - 37px);
+  margin-bottom: 0;
+  margin-top: 0;
+  vertical-align: top;
+}
+
+query-builder fd-checkbox {
+  position: absolute !important;
+}
+
+query-builder set-buttons-container button::not(:last-child) {
+  margin-right: 16px;
+}
+
+
+query-builder::ng-deep q-connector {
+  border: none !important;
+  padding: 6px 0;
+  background: none !important;
+}
+
+
+query-builder::ng-deep .q-tree {
+  padding-inline-start: 63px;
+  margin-top: 15px;
+}
+query-builder::ng-deep .q-connector:before {
+  left: -37px;
+  width: 35px;
+  border-color: var(--sapContent_Selected_ForegroundColor);
+  height: 40px;
+  top: -16px;
+}
+query-builder::ng-deep .q-connector:after {
+  left: -37px;
+  width: 35px;
+  border-color: var(--sapContent_Selected_ForegroundColor);
+  height: 100%;
+  top: 2px;
+}
+query-builder.field-select:before,
+.set-label:before {
+  content: '\e0e3';
+  font-family: var(--sapContent_IconFontFamily);
+  position: absolute;
+  left: -53px;
+  top: 8px;
+  font-size: 16px;
+  padding-top: 5px;
+  background-color: white;
+  height: 27px;
+  width: 32px;
+  border: var(--sapContent_Selected_ForegroundColor) 1px solid;
+  color: var(--sapContent_Selected_ForegroundColor);
+  z-index: 1;
+  border-radius: 75px;
+  text-align: center;
+}
+
+query-builder::ng-deep .fd-select__control {
+  margin-top: 0;
+}
+
+.sticky-footer {
+  position: sticky;
+  bottom: 20px;
+  margin-top: 20px;
+  z-index: 1;
+  .save-btn {
+    margin-right: 10px;
+  }
+}

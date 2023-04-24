@@ -1,0 +1,58 @@
+<query-builder
+  [(ngModel)]="query"
+  [config]="config"
+  (ngModelChange)="onQueryBuilderChange($event)"
+>
+  <ng-container
+    *queryButtonGroup="
+      let ruleset;
+      let addRule = addRule;
+      let addRuleSet = addRuleSet;
+      let removeRuleSet = removeRuleSet;
+      let $implicit = $implicit;
+      let $parent = $parent
+    "
+  >
+    <div *ngIf="ruleset.rules.length > 0; else root">
+      <button mat-button (click)="addRule()">+ Rule</button>
+      <button
+        fd-button
+        fdType="transparent"
+        (click)="removeRuleSet()"
+        glyph="delete"
+      >
+        X
+      </button>
+    </div>
+
+    <ng-template #root>
+      <div>
+        <ng-container *querySwitchGroup="let ruleset">
+          <select
+            *ngIf="ruleset.rules.length > 1"
+            [(ngModel)]="ruleset.condition"
+          >
+            <option type="radio" title="And" value="and">and</option>
+            <option type="radio" title="And" value="or">or</option>
+          </select>
+          <ng-template #root> </ng-template>
+        </ng-container>
+
+        <button mat-button (click)="addRuleSet()">+ RuleSet</button>
+      </div>
+    </ng-template>
+
+    <div>
+      <button (click)="log(ruleset)">log</button>
+    </div>
+  </ng-container>
+
+  <ng-container *querySwitchGroup="let ruleset">
+    <select *ngIf="ruleset.rules.length > 1" [(ngModel)]="ruleset.condition">
+      <option type="radio" title="And" value="and">and</option>
+      <option type="radio" title="And" value="or">or</option>
+    </select>
+  </ng-container>
+</query-builder>
+
+<p>{{ query | json }}</p>

@@ -31,12 +31,23 @@
                 "output": "./assets/theming-base/"
               },
               {
+                "glob": "**/*.wof",
+                "input": "./node_modules/@sap-theming/theming-base-content/content/Base/baseLib/fonts/",
+                "output": "./assets/theming-base/"
+              },
+              {
                 "glob": "**/*",
                 "input": "./node_modules/fundamental-styles/dist/theming/",
                 "output": "./assets/fundamental-styles-theming/"
               }
             ],
-            "styles": ["src/styles.scss"],
+            "styles": ["src/styles.scss", 
+            "node_modules/fundamental-styles/dist/theming/sap_fiori_3.css",
+            "node_modules/fundamental-styles/dist/icon.css",
+            "node_modules/fundamental-styles/dist/fundamental-styles.css",
+            "node_modules/@sap-theming/theming-base-content/content/Base/baseLib/sap_fiori_3/css_variables.css"
+
+          ],
             "scripts": []
           },
           "configurations": {
@@ -57,7 +68,32 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
+            "ar": {
+              "aot": true,
+              "outputPath": "dist/fundamental-ngx-sample-apps/locale/ar",
+              "i18nFile": "src/locale/ar/messages.ar.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "ar",
+              "i18nMissingTranslation": "error"
+            },
+            "fr": {
+              "aot": true,
+              "outputPath": "dist/fundamental-ngx-sample-apps/locale/fr",
+              "i18nFile": "src/locale/fr/messages.fr.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "fr",
+              "i18nMissingTranslation": "error"
             }
+
           }
         },
         "serve": {
