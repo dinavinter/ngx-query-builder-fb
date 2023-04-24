@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { QueryBuilderConfig,Rule,RuleSet } from 'ngx-angular-query-builder';
+import { QueryBuilderConfig,Rule,RuleSet,QueryBuilderClassNames } from 'ngx-angular-query-builder';
 
 @Component({
   selector: 'app-ngx-query-fb',
@@ -13,7 +13,10 @@ export class NgxQueryFbComponent implements OnInit {
   ngOnInit(): void {
   }
 
- 
+  @Input() classNames: QueryBuilderClassNames = {
+    removeButton: "fd-button fd-button--transparent is-cozy",
+    removeIcon:"fd-icon sap-icon--delete"
+  };
   
     @Input() query = {
       root: true,
