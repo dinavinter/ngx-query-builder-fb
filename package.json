@@ -33,6 +33,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "deploy": "ng deploy",
     "gh": "ng deploy --base-href=/ngx-query-builder-fb/"
   },
   "devDependencies": {
