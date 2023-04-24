@@ -1,1 +1,166 @@
-<p>ng-query-builder-console works!</p>
+
+<div>
+    <query-builder
+      [(ngModel)]="query"
+      [config]="config"
+      [allowRuleset]="true"
+      [allowCollapse]="false"
+      [persistValueOnFieldChange]="false"
+      #queryBuilder
+    >
+      <ng-container
+        *queryButtonGroup="let ruleset; let addRule=addRule; let addRuleSet=addRuleSet; let removeRuleSet=removeRuleSet"
+      >
+        <div class="set-buttons-container">
+          <button fd-button (click)="addRule()" [disabled]="isDisabled">
+            Add Rule
+          </button>
+          <button fd-button (click)="addRuleSet()" [disabled]="isDisabled">
+            Add Ruleset
+          </button>
+          <button
+            fd-button
+            fdType="transparent"
+            (click)="removeRuleSet()"
+            glyph="delete"
+            *ngIf="removeRuleSet"
+          ></button>
+        </div>
+      </ng-container>
+
+      <ng-container *queryRemoveButton="let rule; let removeRule=removeRule">
+        <button
+          fd-button
+          fdType="transparent"
+          (click)="removeRule(rule)"
+          glyph="delete"
+        ></button>
+      </ng-container>
+      <ng-container *querySwitchGroup="let ruleset; let onChange=onChange">
+        <div class="set-label before-select">Match</div>
+        <fd-select
+          [(ngModel)]="ruleset.condition"
+          (ngModelChange)="onChange($event)"
+          class="condition-select"
+          [disabled]="isDisabled"
+        >
+          <fd-option value="and">all (AND)</fd-option>
+          <fd-option value="or">any (OR)</fd-option>
+        </fd-select>
+        <div class="set-label after-select">of the following filters</div>
+      </ng-container>
+      <ng-container
+        *queryField="let rule; let fields=fields; let onChange=onChange; let getFields = getFields"
+      >
+        <fd-select
+          [(ngModel)]="rule.field"
+          (ngModelChange)="onChange($event, rule)"
+          class="field-select"
+          [disabled]="isDisabled"
+        >
+          <fd-option
+            *ngFor="let field of getFields(rule.entity)"
+            [value]="field.value"
+            >{{field.name}}</fd-option
+          >
+        </fd-select>
+      </ng-container>
+      <ng-container
+        *queryOperator="let rule; let operators=operators; let onChange=onChange"
+      >
+        <fd-select
+          [(ngModel)]="rule.operator"
+          (valueChange)="onChange(rule)"
+          class="operator-select"
+          [disabled]="isDisabled || operators.length === 1"
+        >
+          <fd-option *ngFor="let value of operators" [value]="value"
+            >{{value}}</fd-option
+          >
+        </fd-select>
+      </ng-container>
+      <ng-container
+        *queryInput="let rule; type: 'boolean'; let onChange=onChange"
+      >
+        <fd-select
+          [(ngModel)]="rule.value"
+          (ngModelChange)="onChange()"
+          class="value-select"
+          [disabled]="isDisabled"
+        >
+          <fd-option [value]="true">True</fd-option>
+          <fd-option [value]="false">False</fd-option>
+        </fd-select>
+      </ng-container>
+      <ng-container
+        *queryInput="let rule; type: 'string'; let onChange=onChange"
+      >
+        <input
+          fd-input
+          fd-form-control
+          type="text"
+          [(ngModel)]="rule.value"
+          [disabled]="isDisabled"
+          (ngModelChange)="onChange()"
+        />
+      </ng-container>
+      <ng-container
+        *queryInput="let rule; type: 'number'; let onChange=onChange"
+      >
+        <input
+          fd-input
+          fd-form-control
+          type="number"
+          [(ngModel)]="rule.value"
+          [disabled]="isDisabled"
+          (ngModelChange)="onChange()"
+        />
+      </ng-container>
+      <ng-container *queryInput="let rule; type: 'date'; let onChange=onChange">
+        <input
+          fd-input
+          fd-form-control
+          type="date"
+          [(ngModel)]="rule.value"
+          [disabled]="isDisabled"
+          (ngModelChange)="onChange()"
+        />
+      </ng-container>
+      <ng-container *queryEmptyWarning="let message=message">
+        <fd-message-strip
+          class="fd-card__message-strip"
+          type="error"
+          [dismissible]="false"
+          >{{message}}</fd-message-strip
+        >
+      </ng-container>
+    </query-builder>
+  </div>
+<fd-layout-panel class="sticky-footer">
+  <fd-layout-panel-header>
+    <fd-layout-panel-actions>
+      <button
+        fd-button
+        class="save-btn"
+        [compact]="true"
+        [fdType]="'emphasized'"
+        (click)="onSetFilterCriteria()"
+        [disabled]="!dirty || (query && this.query.rules.length > 0) "
+      >
+        Save
+      </button>
+      <button
+        fd-button
+        [fdType]="'transparent'"
+        [compact]="true"
+        (click)="initRules()"
+        [disabled]="!dirty"
+      >
+        Cancel
+      </button>
+    </fd-layout-panel-actions>
+  </fd-layout-panel-header>
+</fd-layout-panel>
+
+
+<p>{{ query | json }}</p>
