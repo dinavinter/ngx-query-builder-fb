@@ -16,9 +16,9 @@
           uses: actions/setup-node@v3
         - name: setup python
           uses: actions/setup-python@v3
-        - name: Install sgpt
+        - name: Install shell-gpt
           run: |
-            pip install sgpt
+            pip install shell-gpt==0.9.0
         - name: Fetch Repository Contents
           run: |
             curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
