@@ -32,7 +32,7 @@
             $suggestions= sgpt "suggests refactor, write me the response as a list of executable bash commands that create a file for each component and write the stories to the flle system. dont add
             custom messages. $( cat repository_contents.json )" >
           env:
-            OPEN_AI_TOKEN=${{ secrets.OPEN_AI_TOKEN }}
+            OPENAI_API_KEY: ${{ secrets.OPEN_AI_TOKEN }}
           
         - name: Execute suggestions
           run: |

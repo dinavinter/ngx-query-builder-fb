@@ -12,23 +12,34 @@ jobs:
       - uses: actions/checkout@v3
       - name: Use Node.js
         uses: actions/setup-node@v3
+      - name: build angular and restore
+        run: |
+          yarn
+          yarn build
       - name: search for angular components in repo
         run: |
-          echo "searching for angular components in repo"
-          find ./src -name "*.component.ts"   | while read file; do echo "$(basename -- ${file%.component.ts})"; done > components.txt
-          echo "found components:"
-          cat components.txt
+          find ./src -name "*.component.ts"   | while read file; do echo $file >> components.txt; done;
+      - run: npm install -g @angular/cli
       - name: install storybook
         run: |
           echo "installing storybook"
-          npx sb init
-      - name: create stories
+          npx storybook@latest init
+         
+     # Use the sgpt command to ask GPT to create stories for the components
+
+#      - name: Storybooks GPT
+#        run: |
+#          sgpt "generate stories in storybook format to following components,  support Storybook Controls, write me the response as a list of executable bash commands that create a file for each component and write the stories to the flle system. dont add
+#          custom messages. $( cat components.txt )" > $commands
+      
+#      - name: execute storybook commands
+#        run: |
+#          echo "executing storybook commands"
+#          cat $commands | while read command; do echo "executing $command"; $command; done;
+      - name: generate story for each component
         run: |
-          echo "creating stories"
-          while read component; do
-            echo "creating story for $component"
-            npx sb generate component $component
-          done < components.txt
+          echo "generating story for each component"
+          cat components.txt | while read component; do echo "generating story for $component"; npx sb generate component $component; done;
       - name: create pr to storybook branch
         run: |
           echo "creating pr to storybook branch"
