@@ -38,14 +38,14 @@
           run: |
             cat $suggestions | while read command; do echo "executing $command"; $command; done;
 
-        - name: create pr to storybook branch
+        - name: create pr to refactor_gpt branch
           run: |
-            echo "creating pr to storybook branch"
-            git checkout -b storybook
+            echo "creating pr to refactor_gpt branch"
+            git checkout -b refactor_gpt
             git add .
-            git commit -m "create storybook"
-            git push origin storybook -f
-            gh pr create --title "update storybook" --body "update storybook" --base main --head storybook
+            git commit -m "chore(core): gpt refactor"
+            git push origin refactor_gpt -f
+            gh pr create --title "refactor code" --body "refactor code" --base main --head refactor_gpt
         
 
         
