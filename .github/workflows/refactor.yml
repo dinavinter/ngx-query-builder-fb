@@ -1,0 +1,51 @@
+#write github action to read all repository content and send to gpt to remember then ask him to refactor, the action should read and understand the suggessions, update the files,  and create a PR with changes , use sgpt command"
+  name: Refactor
+  
+  on:
+    push:
+      branches:
+        - main
+  
+  jobs:
+    refactor:
+      runs-on: windows-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+        - name: Set up Node.js
+          uses: actions/setup-node@v3
+        - name: setup python
+          uses: actions/setup-python@v3
+        - name: Install sgpt
+          run: |
+            pip install sgpt
+        - name: Fetch Repository Contents
+          run: |
+            curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                 -H "Accept: application/vnd.github.v3.raw" \
+                 -o repository_contents.json \
+                 https://api.github.com/repos/${{ github.repository }}/contents/
+
+        - name: Refactor code with GPT
+          run: |
+            # Use the sgpt command to ask GPT to refactor the code based on the suggestions
+            $suggestions= sgpt "suggests refactor, write me the response as a list of executable bash commands that create a file for each component and write the stories to the flle system. dont add
+            custom messages. $( cat repository_contents.json )" >
+          env:
+            OPEN_AI_TOKEN=${{ secrets.OPEN_AI_TOKEN }}
+          
+        - name: Execute suggestions
+          run: |
+            cat $suggestions | while read command; do echo "executing $command"; $command; done;
+
+        - name: create pr to storybook branch
+          run: |
+            echo "creating pr to storybook branch"
+            git checkout -b storybook
+            git add .
+            git commit -m "create storybook"
+            git push origin storybook -f
+            gh pr create --title "update storybook" --body "update storybook" --base main --head storybook
+        
+
+        
