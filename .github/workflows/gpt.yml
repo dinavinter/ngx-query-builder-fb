@@ -1,0 +1,49 @@
+# write github action that create a storybook and stories of the available components 
+name: storybook
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+        node-version: '14'
+      - name: search for angular components in repo
+        run: |
+          echo "searching for angular components in repo"
+          find . -name "*.component.ts" -print0 | xargs -0 grep -l "selector:" | xargs -I {} grep -oP '(?<=selector: \').*(?=\',)' {} | sort | uniq > components.txt
+          echo "found components:"
+          cat components.txt
+      - name: install storybook
+        run: |
+          echo "installing storybook"
+          npx sb init
+      - name: create stories
+        run: |
+          echo "creating stories"
+          while read component; do
+            echo "creating story for $component"
+            npx sb generate component $component
+          done < components.txt
+      - name: create pr to storybook branch
+        run: |
+          echo "creating pr to storybook branch"
+          git checkout -b storybook
+          git add .
+          git commit -m "create storybook"
+          git push origin storybook -f
+          gh pr create --title "update storybook" --body "update storybook" --base main --head storybook
+        
+      - name: build storybook
+        run: |
+          echo "building storybook"
+          npx sb build
+      - name: deploy storybook
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./storybook-static
+        
+        
+  
