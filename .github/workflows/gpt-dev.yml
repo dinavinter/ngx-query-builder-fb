@@ -2,8 +2,12 @@ name: GPT Developer
 
 on:
   issues:
+    labels:
+     - gpt
     types:
       - labeled
+      - opened
+      - updated
 
 jobs:
   update-code-on-issue:
