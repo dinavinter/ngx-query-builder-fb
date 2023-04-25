@@ -1,5 +1,10 @@
 # write github action that create a storybook and stories of the available components 
 name: storybook
+on:
+  push:
+    branches: 
+      - main
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
