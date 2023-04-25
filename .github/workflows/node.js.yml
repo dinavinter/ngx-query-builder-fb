@@ -31,5 +31,8 @@ jobs:
         git config --global user.email "pagesbuild@ghpages.com"
         git config --global user.name "pages build and deployment"
         yarn deploy
+      with:
+        GH_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ github.token }}
       env:
         GH_TOKEN: ${{ github.token }}
