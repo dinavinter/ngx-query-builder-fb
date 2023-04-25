@@ -15,7 +15,7 @@ jobs:
       - name: search for angular components in repo
         run: |
           echo "searching for angular components in repo"
-          find . -name "*.component.ts" -print0 | xargs -0 grep -l "selector:" | xargs -I {} grep -oP '(?<=selector: \').*(?=\',)' {} | sort | uniq > components.txt
+          find ./src -name "*.component.ts"   | while read file; do echo "$(basename -- ${file%.component.ts})"; done > components.txt
           echo "found components:"
           cat components.txt
       - name: install storybook
