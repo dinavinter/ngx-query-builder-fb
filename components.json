@@ -1,0 +1,5 @@
+[{name:app, file: ./src/app/app.component.ts}]
+[{name:hello, file: ./src/app/hello.component.ts}]
+[{name:landing, file: ./src/app/landing/landing.component.ts}]
+[{name:ng-query-builder-console, file: ./src/app/ng-query-builder-console/ng-query-builder-console.component.ts}]
+[{name:ngx-query-fb, file: ./src/app/ngx-query-fb/ngx-query-fb.component.ts}]

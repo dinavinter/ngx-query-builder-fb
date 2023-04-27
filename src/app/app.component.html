@@ -1,22 +1,31 @@
 <div class="app">
 
-    <div fd-bar barDesign="header" aria-posinset="top">
-        <div fd-bar-left [title]="title">
-            <a fd-button
-               routerLink="main"
-               fdType="transparent"
-               routerLinkActive="active" ariaCurrentWhenActive="page"
-               glyph="home"></a>
+    <fd-shellbar fdType="transparent"   aria-posinset="top">
+        <fd-shellbar-actions >
+            <fd-shellbar-action
+                glyph="home"
+                routerLink="main"
+                fdType="transparent"
+                
+                routerLinkActive="active" ariaCurrentWhenActive="page" >
+            </fd-shellbar-action>
+       
+                
+          
+         <a  
+            aria-description ="Github"
+            href="https://github.com/dinavinter/ngx-query-builder-fb">
+             <fd-shellbar-action
+                     glyph="source-code"
+                     fdType="transparent"
+                     routerLinkActive="active" ariaCurrentWhenActive="page" >
 
-            <a fd-button
-               href="https://github.com/dinavinter/ngx-query-builder-fb"
-               fdType="transparent"
-               routerLinkActive="active" ariaCurrentWhenActive="page"
-               glyph="source-code"
-            > Github </a>
-
-        </div>
-    </div>
+             </fd-shellbar-action>
+         </a>
+ 
+        </fd-shellbar-actions>
+       
+    </fd-shellbar>
     <main>
         <router-outlet></router-outlet>
     </main>

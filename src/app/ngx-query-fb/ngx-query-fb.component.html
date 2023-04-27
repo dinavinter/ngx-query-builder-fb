@@ -2,14 +2,16 @@
         [(ngModel)]="query"
         [config]="config"
         (ngModelChange)="onQueryBuilderChange($event)"
-        [classNames]="classNames">
+        [classNames]="classNames"
+        #builder>
+ 
+
     <ng-container *queryButtonGroup="
             let ruleset;
             let addRule = addRule;
             let addRuleSet = addRuleSet;
             let removeRuleSet = removeRuleSet;
             let $implicit = $implicit;
-            let $parent = $parent
           ">
 
 
@@ -20,12 +22,6 @@
                     glyph="add"
                     (click)="addRule()"
                     tooltip="Add Condition"></button>
-            <!-- <button
-              (click)="removeRuleSet()"
-              fd-button
-              fdType="transparent"
-              glyph="delete"
-              tooltip="Remove Rule Set"></button> -->
         </div>
 
         <ng-template #root>
@@ -49,9 +45,7 @@
                 value="or">or
             </li>
         </fd-select>
-        <ng-template #root></ng-template>
-    </ng-container>
-
+    </ng-container> 
 
     <ng-container [fdCozy]="true" *queryRemoveButton="let rule; let removeRule=removeRule">
         <button
@@ -62,12 +56,54 @@
                 tooltip="Remove Rule"></button>
     </ng-container>
 
+    
+    <ng-container *queryInput="let rule; type: 'all-accounts'">
+        <fd-message-strip fdOverflowPriority="high"  type="warning" [dismissible]="false" [noIcon]="true">
+            All Accounts
+        </fd-message-strip>
+   </ng-container>
+
+   </query-builder>
+<fdp-panel
+    title="Output"
+    fdCompact
+    [expandable]="true">
+    <fdp-panel-content>
+        <pre><p>{{query | json}}</p></pre> 
+    </fdp-panel-content>
+</fdp-panel>
+
+
+
+   <!-- <ng-container *queryOperator="let rule; let operators=operators">
+    <div [ngClass]="builder.getClassNames('operatorControlSize')" >
+      <fd-select [ngClass]="builder.getClassNames('operatorControl')" *ngIf="operators.length > 0;" [(ngModel)]="rule.operator">
+        <fd-option *ngFor="let value of operators" [value]="value">{{value}}</fd-option>
+      </fd-select>
+    </div>
+  </ng-container>
+
+   <ng-container *queryInput="let rule; let field=field; let options=options; type: 'category'">
+    <fdp-form-field>
+      <fdp-select [(ngModel)]="rule.value" [placeholder]="field.name">
+        <fdp-option *ngFor="let opt of options" [value]="opt.value">
+          {{ opt.name }}
+        </fdp-option>
+      </fdp-select>
+    </fdp-form-field>
+  </ng-container>
 </query-builder>
 
-<footer>
-    <code title="Output" fd-dynamic-side-content position="bottom">{{ query | json }}</code>
-</footer>
-<!-- 
+<fdp-panel
+title="Output"
+fdCompact
+[expandable]="true">
+<fdp-panel-content>
+    <pre><p>{{query | json}}</p></pre> 
+    </fdp-panel-content>
+</fdp-panel>
+
+
 <ng-container *querySwitchGroup="let ruleset">
     <fd-split-button (primaryButtonClicked)="addRule()" >
       <fd-menu>
@@ -90,4 +126,12 @@
 <button fd-button
         fdType="transparent"
         glyph="sys-find" 
-        (click)="log(ruleset)"></button> -->
+        (click)="log(ruleset)"></button>
+    
+    
+<button
+              (click)="removeRuleSet()"
+              fd-button
+              fdType="transparent"
+              glyph="delete"
+              tooltip="Remove Rule Set"></button> -->

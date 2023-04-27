@@ -1,0 +1,72 @@
+# This is a GitHub Action that asks ChatGPT to edit your code for you.
+name: ChatGPT
+on: 
+  workflow_dispatch:
+    input: 
+      prompt: 
+        description: 'The prompt to send to ChatGPT'
+        required: true
+        type: string
+        default: 'How many files exists in this repo?'
+        
+        
+  issues:
+    types: [opened, updated] 
+    tags: [ChatGPT]
+jobs:
+  gpt-task:
+    steps:
+      - name: setup nodejs@v3
+        uses: actions/setup-node@v3\
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: set prompt from input , or issue content or last comment
+        run: |
+          if [ -z "${{ github.event.inputs.prompt }}" ]; then
+            if [ -z "${{ github.event.issue.body }}" ]; then
+              if [ -z "${{ github.event.comment.body }}" ]; then
+                echo "no prompt found"
+                exit 1
+              else
+                echo "using comment body as prompt"
+                echo "${{ github.event.comment.body }}" > prompt.txt
+              fi
+            else
+              echo "using issue body as prompt"
+              echo "${{ github.event.issue.body }}" > prompt.txt
+            fi
+          else
+            echo "using input as prompt"
+            echo "${{ github.event.inputs.prompt }}" > prompt.txt
+          fi
+          
+      - name: read components contents from src directory into memory
+        run: |
+          find ./src -name "*.component.ts"   | while read file; do echo $file"; done > components.txt
+
+          find ./src -name "*.component.ts"   | while read file; do echo "[{name:$(basename -- ${file%.component.ts}), file: $file}]"; done > components.json
+          echo "found components:"
+          cat components.txt
+          while read component; do
+              echo "reading $component"
+              cat ./src/$component.component.ts > $component.txt
+          done < components.txt
+     
+
+      - name: for each  components read content into memory
+        run: |
+          find ./src -name "*.component.ts"   | while read file; do echo "$file:'$(cat $file)'" >> components.txt; done;
+          echo "found components:"
+          cat components.txt
+          
+          
+          
+      
+      
+      
+      
+      - name: ask gpt
+        run: |
+          npx chatgpt@latest --model gpt-4 ${{ github.event.inputs.prompt  }} > $GITHUB_STEP_SUMMARY
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

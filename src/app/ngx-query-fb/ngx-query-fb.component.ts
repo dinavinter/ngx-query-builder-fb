@@ -19,7 +19,6 @@ export class NgxQueryFbComponent implements OnInit {
   };
   
     @Input() query = {
-      root: true,
       condition: 'and',
       rules: [
         {
@@ -49,10 +48,11 @@ export class NgxQueryFbComponent implements OnInit {
           defaultValue: [],
         },
         UID: {
-          name: 'uid',
+          name: 'All Accounts',
           type: 'all-accounts',
-          operators: ['is not null'],
-          defaultOperator: 'is not null',
+          validator(rule, parent) {
+             return parent.rules.length == 1;
+          }
         },
       },
     };
@@ -85,5 +85,5 @@ export class NgxQueryFbComponent implements OnInit {
   }
   const AllAccountsRule = {
     field: 'UID',
-    operator: 'is not null',
+    value :'is not null'
   };
